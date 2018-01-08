@@ -1,11 +1,15 @@
 # frozen_string_literal: true
+require 'redis'
+
+$redis = Redis.new
+$redis.set 'foo', 'bar'
 
 def test
-  'hello world'
+  $redis.get 'foo'
 end
 
 require 'benchmark'
 
 Benchmark.bmbm do |x|
-  x.report('frozen') { 100_000_000.times { test } }
+  x.report('frozen') { 1_000_000.times { test } }
 end
