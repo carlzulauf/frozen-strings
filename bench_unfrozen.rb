@@ -8,5 +8,5 @@ end
 require 'benchmark'
 
 Benchmark.bmbm do |x|
-  x.report('unfrozen') { 1_000_000.times { JSON.parse(test) } }
+  x.report('unfrozen') { 10_000_000.times { JSON.parse(test) } }
 end

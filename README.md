@@ -1,57 +1,57 @@
 Comparing the magic comment for frozen string literals.
 
-# 2.2
+# 2.4.2
 
 ```
-$ rvm 2.2 do ruby runner.rb
+$ ruby runner.rb
 
 Running file: bench_frozen.rb
 Rehearsal ------------------------------------------
-frozen  12.160000   0.030000  12.190000 ( 12.212493)
--------------------------------- total: 12.190000sec
+frozen  12.580000   0.000000  12.580000 ( 12.588475)
+-------------------------------- total: 12.580000sec
 
              user     system      total        real
-frozen  12.220000   0.020000  12.240000 ( 12.267354)
-GC count: 8918
+frozen  12.960000   0.000000  12.960000 ( 12.949873)
+GC count: 8745
 
 Running file: bench_unfrozen.rb
 Rehearsal --------------------------------------------
-unfrozen  12.190000   0.020000  12.210000 ( 12.223738)
----------------------------------- total: 12.210000sec
+unfrozen  12.660000   0.000000  12.660000 ( 12.661433)
+---------------------------------- total: 12.660000sec
 
                user     system      total        real
-unfrozen  12.270000   0.020000  12.290000 ( 12.301451)
-GC count: 8907
-```
-
-# 2.3
+unfrozen  12.380000   0.000000  12.380000 ( 12.388077)
+GC count: 9805
 
 ```
-$ rvm 2.3 do ruby runner.rb
+
+# 2.5
+
+```
+$ ruby runner.rb
 
 Running file: bench_frozen.rb
 Rehearsal ------------------------------------------
-frozen   5.540000   0.000000   5.540000 (  5.539556)
---------------------------------- total: 5.540000sec
+frozen  13.552000   0.000000  13.552000 ( 13.554256)
+-------------------------------- total: 13.552000sec
 
              user     system      total        real
-frozen   5.560000   0.010000   5.570000 (  5.566902)
-GC count: 1
+frozen  13.256000   0.000000  13.256000 ( 13.257631)
+GC count: 18205
 
 Running file: bench_unfrozen.rb
 Rehearsal --------------------------------------------
-unfrozen   7.880000   0.010000   7.890000 (  7.900737)
------------------------------------ total: 7.890000sec
+unfrozen  13.676000   0.000000  13.676000 ( 13.676287)
+---------------------------------- total: 13.676000sec
 
                user     system      total        real
-unfrozen   7.920000   0.020000   7.940000 (  7.963265)
-GC count: 12363
+unfrozen  13.340000   0.000000  13.340000 ( 13.340263)
+GC count: 20962
+
 ```
 
 # Conclusion
 
-By including the magic comment, the interpreter is able to only allocate the `'hello world'` string
-a single time. Each call to the `test` method then returns a frozen string constant. This avoids
-allocating a new string each time and thus garbage collection events are avoided as well.
+Test variability is greater than the performance difference for frozen vs unfrozen literals.
 
-In ruby 2.3, this results in a 30% speed up for simple string literals.
+Ruby 2.5 actually has a small regression when parsing extremely simple JSON messages. This difference is actually measurable and greater than frozen vs unfrozen string differences.
