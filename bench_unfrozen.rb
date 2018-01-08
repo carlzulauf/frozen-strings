@@ -1,11 +1,12 @@
 # frozen_string_literal: false
+require 'json'
 
 def test
-  'hello world'
+  '{"message": "hello world"}'
 end
 
 require 'benchmark'
 
 Benchmark.bmbm do |x|
-  x.report('unfrozen') { 100_000_000.times { test } }
+  x.report('unfrozen') { 1_000_000.times { JSON.parse(test) } }
 end
